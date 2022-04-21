@@ -24,7 +24,9 @@ is created.
 
 1.  Get the xauth cookie of the user 'mininet':
     - SSH into the mininet VM and run:
-    $ xauth list $DISPLAY
+    $ whoami
+    mininet
+    $ xauth list
     mininet-vm/unix:10  MIT-MAGIC-COOKIE-1  6c939ed0602efaf619b57de7dda1252a
 
 2.  Enter root mode and add the cookie to xauth list:
