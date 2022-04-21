@@ -32,7 +32,7 @@ i) Attach Adapter 1 on VM to 'Bridged Adapter':
    Promiscuous Mode: Allow All
 
    Using this mode, you can SSH from the host into the VM by:
-   $ ssh mininet@<IP_address_inside_vm>
+   $ ssh -X mininet@<IP_address_inside_vm>
    password is 'mininet'.
 
 ii)Attach Adapter 1 on VM to 'NAT':
@@ -50,11 +50,13 @@ ii)Attach Adapter 1 on VM to 'NAT':
    Leave all other fields blank.
 
    You can SSH from the host into the VM by:
-   $ ssh mininet@127.0.0.1:3022
+   $ ssh -X mininet@127.0.0.1:3022
 
    127.0.0.1 is the host's loopback IP address.
 
 3. Run the virtual machine and SSH into the Mininet VM as described above.
+   The '-X' argument is required because 'xterm' will be used to invoke
+   terminals in the hosts virtualized by Mininet.
 
 
 
