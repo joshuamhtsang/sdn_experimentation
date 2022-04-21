@@ -1,0 +1,22 @@
+#############
+### dpctl ###
+#############
+
+dpctl stands for 'data path controller' (or something similar).  It
+is a utility to send basic OpenFlow messages to a switch.
+
+
+1.  Create the mininet network:
+$ sudo mn --topo single,3 --mac --switch ovsk --controller remote
+*** Creating network
+*** Adding controller
+Unable to contact the remote controller at 127.0.0.1:6653
+Unable to contact the remote controller at 127.0.0.1:6633
+Setting remote controller to 127.0.0.1:6653
+
+Pay careful attention to the port number of the remote controller.  The
+**switch** port will be +1 of the controller's port number.  For example,
+we see the controller is port 6653, so the switch port will be 6653+1=6654.
+
+
+
