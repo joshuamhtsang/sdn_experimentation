@@ -4,7 +4,7 @@ Mininet Install
 ### Mininet VM in VirtualBox Method ###
 #######################################
 
-The aim is to run the Mininet VM and allow ssh into the VM
+The aim is to run the Mininet VM and allow SSH into the VM
 from the host machine.
 
 1.  Install VirtualBox and download the Mininet image.
@@ -31,7 +31,31 @@ i) Attach Adapter 1 on VM to 'Bridged Adapter':
    Adapter Type: Intel PRO/1000 MT Server (82545EM)
    Promiscuous Mode: Allow All
 
-ii)
+   Using this mode, you can SSH from the host into the VM by:
+   $ ssh mininet@<IP_address_inside_vm>
+   password is 'mininet'.
+
+ii)Attach Adapter 1 on VM to 'NAT':
+   In this mode, a virtual router is added between the host's network
+   interface (e.g. enp6s0) and the VM's network interface (Adapter 1).
+   This means the VM can access the internet, but the host or nodes
+   outside the VM's subnet (or equivalently, behind the virtual router)
+   cannot access/see the VM unless port forwarding is set up.
+
+   Port forward settings to allow SSH into the VM are:
+   Forwarding rule name:  ssh (can be anything)
+   Protocol: TCP
+   Host Port: 3022 (or any free port)
+   Guest Port: 22 (SSH's default port)
+   Leave all other fields blank.
+
+   You can SSH from the host into the VM by:
+   $ ssh mininet@127.0.0.1:3022
+
+   127.0.0.1 is the host's loopback IP address.
+
+3. Run the virtual machine and SSH into the Mininet VM as described above.
+
 
 
 
