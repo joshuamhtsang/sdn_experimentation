@@ -21,9 +21,19 @@ i) Attach Adapter 1 on VM to 'Bridged Adapter':
    the host's network interface (enp6s0).
 
    For example, if 'ifconfig' on the host says:
+
     enp6s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         inet 192.168.1.101  netmask 255.255.255.0  broadcast 192.168.1.255
-   Then the VM will get an IP address like 192.168.1.104 (check using 'ifconfig'
-   inside the VM).
 
-   
+   Then the VM will get an IP address like 192.168.1.104 (check using 'ifconfig'
+   inside the VM).  Other noteworthy settings:
+
+   Adapter Type: Intel PRO/1000 MT Server (82545EM)
+   Promiscuous Mode: Allow All
+
+ii)
+
+
+
+
+
