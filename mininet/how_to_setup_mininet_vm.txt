@@ -14,6 +14,16 @@ https://github.com/mininet/mininet/releases/
 
 2.  Allow the host machine to ssh into the Mininet VM.
 First do VM network setup, there are 2 options:
-i) Use Adapter 1 as 'Bridged Adapter'.
-   Select
+i) Attach Adapter 1 on VM to 'Bridged Adapter':
+   In this mode, a virtual switch is added between the host's
+   network interface (e.g. enp6s0) and the VM's virtual interface
+   (Adapter 1).  This means the VM is added to the same subnet as
+   the host's network interface (enp6s0).
 
+   For example, if 'ifconfig' on the host says:
+    enp6s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.1.101  netmask 255.255.255.0  broadcast 192.168.1.255
+   Then the VM will get an IP address like 192.168.1.104 (check using 'ifconfig'
+   inside the VM).
+
+   
