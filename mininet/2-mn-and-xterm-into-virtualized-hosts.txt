@@ -1,0 +1,39 @@
+#######################
+### Running Mininet ###
+#######################
+
+Theoretically, running Mininet is simple:
+1.  SSH into the VM (see guide 'setup-mininet-vm.txt').
+2.  Run mininet with sudo privileges:
+     $ sudo mn
+3.  Open a terminal in one of the hosts:
+     $ xterm h1
+
+However, you may get the following error when running xterm
+in mn:
+
+mininet> xterm h1
+mininet> X11 connection rejected because of wrong authentication.
+
+This is because 'mn' is run as root using sudo, and SSH's '-X'
+is made as user 'mininet'.  To fix this, the root user must be
+given the xauth cookie belonging to user 'mininet'.  Please note
+that a new cookie is created each time a SSH session is created,
+so the following steps need to be performed each time SSH session
+is created.
+
+1.  Get the xauth cookie of the user 'mininet':
+    - SSH into the mininet VM and run:
+    $ xauth list $DISPLAY
+    mininet-vm/unix:10  MIT-MAGIC-COOKIE-1  6c939ed0602efaf619b57de7dda1252a
+
+2.  Enter root mode and add the cookie to xauth list:
+    $ sudo -s
+    $ xauth add mininet-vm/unix:10  MIT-MAGIC-COOKIE-1  6c939ed0602efaf619b57de7dda1252a
+    $ exit
+
+3.  Now run 'mn' and:
+    $ xterm h1
+    Should now work.
+
+
