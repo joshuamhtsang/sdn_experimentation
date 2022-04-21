@@ -26,10 +26,11 @@ is created.
     - SSH into the mininet VM and run:
     $ whoami
     mininet
+    $ touch ~/.Xauthority
     $ xauth list
     mininet-vm/unix:10  MIT-MAGIC-COOKIE-1  6c939ed0602efaf619b57de7dda1252a
 
-2.  Enter root mode and add the cookie to xauth list:
+2.  Enter root mode and add the cookie to xauth:
     $ sudo -s
     $ xauth add mininet-vm/unix:10  MIT-MAGIC-COOKIE-1  6c939ed0602efaf619b57de7dda1252a
     $ exit
@@ -38,4 +39,6 @@ is created.
     $ xterm h1
     Should now work.
 
-
+Sources:
+https://www.obriain.com/training/TEL3214/odt/TEL3214-Lecture_12-SDN_odt.pdf
+https://stackoverflow.com/questions/67319171/x11-connection-rejected-because-of-wrong-authentication-in-mininet
