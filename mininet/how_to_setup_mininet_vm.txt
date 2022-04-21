@@ -1,0 +1,19 @@
+Mininet Install
+
+#######################################
+### Mininet VM in VirtualBox Method ###
+#######################################
+
+The aim is to run the Mininet VM and allow ssh into the VM
+from the host machine.
+
+1.  Install VirtualBox and download the Mininet image.
+Sources:
+http://mininet.org/download/
+https://github.com/mininet/mininet/releases/
+
+2.  Allow the host machine to ssh into the Mininet VM.
+First do VM network setup, there are 2 options:
+i) Use Adapter 1 as 'Bridged Adapter'.
+   Select
+
