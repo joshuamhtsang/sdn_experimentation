@@ -1,0 +1,75 @@
+#############
+### ovs-ofctl ###
+#############
+
+ovs-ofctl stands for 'OpenVSwitch OpenFlow Controller' (or something like that...).
+It is a utility to send basic OpenFlow messages to a switch.
+
+
+1.  Create a mininet network with a 'ovsk' switch and no controller:
+
+$ sudo mn --topo single,3 --mac --switch ovsk --controller remote
+*** Creating network
+*** Adding controller
+Unable to contact the remote controller at 127.0.0.1:6653
+Unable to contact the remote controller at 127.0.0.1:6633
+Setting remote controller to 127.0.0.1:6653
+
+Pay careful attention to the port number of the remote controller.  The
+**switch** port will be +1 of the controller's port number.  For example,
+we see the controller is port 6653, so the switch port will be 6653+1=6654.
+
+Note that, by defining a 'remote' controller we're not actually creating any
+controller but defining an endpoint where we can place a controller of
+our choice (e.g. OpenDayLight etc.).
+
+2.  Use ovs-ofctl to see the flow entries on switch 's1':
+mininet> s1 ovs-ofctl dump-flows tcp:localhost:6654
+
+Since we have no controller, the flow table should be empty with no entries.
+
+3.  See the utilized ports on the switch:
+
+mininet> s1 ovs-ofctl dump-ports tcp:localhost:6654
+OFPST_PORT reply (xid=0x2): 4 ports
+  port LOCAL: rx pkts=0, bytes=0, drop=0, errs=0, frame=0, over=0, crc=0
+           tx pkts=0, bytes=0, drop=0, errs=0, coll=0
+  port  "s1-eth1": rx pkts=3, bytes=126, drop=0, errs=0, frame=0, over=0, crc=0
+           tx pkts=0, bytes=0, drop=0, errs=0, coll=0
+  port  "s1-eth2": rx pkts=4, bytes=280, drop=0, errs=0, frame=0, over=0, crc=0
+           tx pkts=4, bytes=280, drop=0, errs=0, coll=0
+  port  "s1-eth3": rx pkts=4, bytes=280, drop=0, errs=0, frame=0, over=0, crc=0
+           tx pkts=4, bytes=280, drop=0, errs=0, coll=0
+
+4.  Trying a ping between h2 and h3:
+
+mininet> h2 ping -c3 h3
+PING 10.0.0.3 (10.0.0.3) 56(84) bytes of data.
+...
+--- 10.0.0.3 ping statistics ---
+2 packets transmitted, 0 received, 100% packet loss, time 1005ms
+
+A ping between h2 and h3 doesn't work!  This is because there is no controller
+to add a flow entry between h2 and h3.  Let's add this manually next.
+
+5.  Add 2 flow entries for back and forth data flow between nodes h2 and h3:
+
+mininet> s1 ovs-ofctl add-flow tcp:localhost:6654 in_port=2,actions=output:3
+mininet> s1 ovs-ofctl add-flow tcp:localhost:6654 in_port=3,actions=output:2
+
+View the added entries on the switch s1:
+
+mininet> s1 ovs-ofctl dump-flows tcp:localhost:6654
+ cookie=0x0, duration=9.867s, table=0, n_packets=0, n_bytes=0, in_port="s1-eth2" actions=output:"s1-eth3"
+ cookie=0x0, duration=4.217s, table=0, n_packets=0, n_bytes=0, in_port="s1-eth3" actions=output:"s1-eth2"
+
+6.  The ping between h2 and h3 should now work:
+
+mininet> h2 ping -c3 h3
+PING 10.0.0.3 (10.0.0.3) 56(84) bytes of data.
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=0.344 ms
+64 bytes from 10.0.0.3: icmp_seq=2 ttl=64 time=0.067 ms
+...
+--- 10.0.0.3 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1023ms
+
