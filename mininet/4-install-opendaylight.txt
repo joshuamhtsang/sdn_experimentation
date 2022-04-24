@@ -68,5 +68,14 @@ Now you can run ODL karaf, inside the untarred opendaylight directory:
 
 $ ./bin/karaf
 
+Now, logout of karaf to stop ODL:
+
+opendaylight-user@root> logout
+
+Shutdown the ubuntu-opendaylight VM, so we can start it in 'host only'
+network mode for the next step.
+
+
+
 
 
