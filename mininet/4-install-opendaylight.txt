@@ -1,0 +1,57 @@
+############################
+### Install OpenDayLight ###
+############################
+
+In this section, OpenDayLight controller will be installed
+in it's own ubuntu virtual machine (OpenDayLight VM), and
+a host-only network consisting of:
+1. Host (the host machine running multiple VM machines)
+2. Mininet VM
+2. OpenDayLight VM
+
+will be created.
+
+
+Step 1: Create a network in Virtual Box
+
+In order to create a host-only network, one must create a
+network in Virtual Box's 'Host Network Manager':
+File -> Host Network Manager -> 'Create'
+
+The default settings will suffice, which are:
+Name:              vboxnet0
+IPv4 address:      192.168.56.1
+IPv4 network mask: 255.255.255.0 (basically, 192.168.56.1/24)
+
+If you run 'ifconfig' on the host machine, you will see a network
+adapter created called 'vboxnet0':
+
+vboxnet0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 192.168.56.1  netmask 255.255.255.0  broadcast 192.168.56.255
+        inet6 fe80::800:27ff:fe00:0  prefixlen 64  scopeid 0x20<link>
+        ether 0a:00:27:00:00:00  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 299  bytes 46335 (46.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+Note under 'flags=' there is no 'RUNNING' status.  Once a VM in Virtual box
+is run with a 'Host Only' network adapter, you will notice the 'RUNNING'
+status appear.
+
+
+Step 2:  Setup a new ubuntu virtual machine (standard procedure)
+
+Call the VM, say, 'ubuntu-opendaylight'.  Instructions:
+https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox#1-overview
+
+
+Step 3:  Install needed tools on ubuntu
+
+$ sudo apt install net-tools    (for ifconfig)
+$ sudo apt install terminator
+
+Step 4:  Install OpenDayLight
+
+https://docs.opendaylight.org/en/stable-phosphorus/getting-started-guide/installing_opendaylight.html
+
