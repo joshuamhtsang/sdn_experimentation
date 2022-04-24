@@ -48,10 +48,25 @@ https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-usin
 
 Step 3:  Install needed tools on ubuntu
 
+Run the ubuntu-opendaylight VM with network adapter set to 'NAT' or 'Bridged' so that
+it has access to the host's internet connection.  We don't need to use 'Host Only'
+network yet.
+
 $ sudo apt install net-tools    (for ifconfig)
 $ sudo apt install terminator
 
 Step 4:  Install OpenDayLight
 
 https://docs.opendaylight.org/en/stable-phosphorus/getting-started-guide/installing_opendaylight.html
+
+Download a OpenDayLight tar and 'tar -zxvf <blah>' to untar it.  ODL
+needs Java Runtime Environment, so install it:
+
+$ sudo apt install default-jre
+
+Now you can run ODL karaf, inside the untarred opendaylight directory:
+
+$ ./bin/karaf
+
+
 
